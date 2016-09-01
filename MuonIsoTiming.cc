@@ -379,6 +379,9 @@ MuonIsoTiming::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     }//end loop for clus
     }//end if irand==0
     else{
+      double rand_eta = gRandom->Uniform(-1.4442,1.4442);
+      double pi = TMath::Pi();
+      double rand_phi = gRandom->Uniform(-pi,pi);
    unsigned int iclus = 0;
     for (const reco::PFCluster &clus : *ebclus) {
       double pt = clus.energy()/cosh(clus.eta());
@@ -389,9 +392,6 @@ MuonIsoTiming::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
       math::XYZVector clusdir(clus.x()-vtx.x(), clus.y()-vtx.y(), clus.z()-vtx.z());
       
-      double rand_eta = gRandom->Uniform(-1.4442,1.4442);
-      double pi = TMath::Pi();
-      double rand_phi = gRandom->Uniform(-pi,pi);
       double dEta = clusdir.eta()-rand_eta;
       double dPhi = deltaPhi(clusdir.Phi(),rand_phi);
       double dR = TMath::Sqrt(dEta*dEta+dPhi*dPhi);
